@@ -1,0 +1,5 @@
+1: In arch spec
+2: Initial printing
+3: Self-test completion
+4: Use tablet
+5: Use teleporter

@@ -106,19 +106,58 @@ Rooms:
     desc: You are in a dark, narrow passage.
     west: Passage vegetation
     east: Passage narrow 2
-  Passage vegatation:
+  Passage vegetation:
     desc: You are in a dark, narrow passage.  To the west, you spot some vegetation where the passage expands.
     east: Passage dark narrow 2
-    west: Ruins
-  Ruins:
+    west: Ruins cavern
+  Ruins cavern:
     desc: You stand in a large cavern with a huge ruin to the north, overgrown by plant life.  There is a large stone archway to the north acting as the doorway to the ruined complex.  A crevice in the rock to the east leads to an alarmingly dark passageway.
-    east: ???
-    north: ???
+    east: Passage vegetation
+    north: Ruins foyer
+  Ruins foyer:
+    desc: You are in the once-opulent foyer of a massive ruined complex.  There is a door to the south leading to the overgrowth outside and stairs to the north which lead into a larger hall.
+    item: red coin
+    south: Ruins cavern
+    north: Ruins hall
+  Ruins hall:
+    desc: You stand in the massive central hall of these ruins.  The walls are crumbling, and vegetation has clearly taken over.  Rooms are attached in all directions.  There is a strange monument in the center of the hall with circular slots and unusual symbols.  It reads
+    # _ + _ * _^2 + _^3 - _ = 399
+    north: Ruins locked
+    south: Ruins foyer
+    east: Ruins dining
+    west: Ruins quarters
+  Ruins dining:
+    desc: You stand in what seems to have once been a dining hall; broken tables and pottery are scattered everywhere.  A staircase here leads down.
+    item: concave coin
+    down: Ruins kitchen
+    west: Ruins hall
+  Ruins quarters:
+    desc: You find yourself in what was once the living quarters for the complex.  Many smaller rooms which once had walls to divide them now lay in disarray.  There is a staircase up here.
+    item: blue coin
+    east: Ruins hall
+    up: Ruins throne
+  Ruins kitchen:
+    desc: This seems to be a kitchen; there are brick stoves and shelves along the wall.  Everything here has fallen into disrepair.
+    item: corroded coin
+    up: Ruins dining
+  Ruins throne:
+    desc: This was long ago a lavish throne room.  Dried-up fountains and crumbling statues line the walls, and the carved stone throne in the center of the room is falling apart.
+    item: shiny coin
+    down: Ruins quarters
+  Ruins locked:
+    desc: Because it has been so well-protected, this room hardly shows signs of decay.  The walls are covered in elaborate murals and decorated with precious metals and stones.
+    item: teleporter
+    south: Ruins hall
 
 Items:
   - tablet
   - empty lantern
   - can
+  - red coin      # 2
+  - concave coin  # 7
+  - blue coin     # 9
+  - corroded coin # 3
+  - shiny coin    # 5
 
 Moves:
   - take tablet
@@ -148,4 +187,26 @@ Moves:
   - west
   - west
   - west
-
+  - north
+  - take red coin
+  - north
+  - west
+  - take blue coin
+  - up
+  - take shiny coin
+  - down
+  - east
+  - east
+  - take concave coin
+  - down
+  - take corroded coin
+  - up
+  - west
+  - use blue coin
+  - use red coin
+  - use shiny coin
+  - use concave coin
+  - use corroded coin
+  - north
+  - take teleporter
+  - use teleporter
