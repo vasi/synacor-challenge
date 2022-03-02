@@ -9,6 +9,7 @@ class Runtime
     @stack = []
     @pc = 0
     @halt = false
+    @debug = false
 
     @inbuf = []
     @inputs = inputs
@@ -44,13 +45,22 @@ class Runtime
 
   def getc
     if @inbuf.empty?
-      input = if @inputs.empty?
-        gets
-      else
-        puts @inputs.last
-        @inputs.shift + "\n"
+      input = nil
+      loop do
+        input = if @inputs.empty?
+          gets.chomp
+        else
+          puts @inputs.first
+          @inputs.shift
+        end
+
+        if input == 'debug'
+          @debug = !@debug
+        else
+          break
+        end
       end
-      @inbuf = input.chars.map(&:ord)
+      @inbuf = (input + "\n").chars.map(&:ord)
     end
     return @inbuf.shift
   end
@@ -58,7 +68,7 @@ class Runtime
   def do_inst
     pc = @pc
     opcode = shift
-    # puts "opcode #{opcode} at #{pc}"
+    puts "opcode #{opcode} at #{pc}" if @debug
     case opcode
     when 0
       @halt = true
