@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
+require 'yaml'
 
 class Runtime
-  def initialize(io)
+  def initialize(io, inputs)
     membase = io.read.unpack('S<*')
     @memory = membase + [0] * (1<<15 - membase.size)
     @reg = [0] * 8
     @stack = []
     @pc = 0
-    @inbuf = []
     @halt = false
+
+    @inbuf = []
+    @inputs = inputs
   end
 
   def shift
@@ -41,7 +44,12 @@ class Runtime
 
   def getc
     if @inbuf.empty?
-      @inbuf = gets.chars.map(&:ord)
+      input = if @inputs.empty?
+        gets
+      else
+        @inputs.shift + "\n"
+      end
+      @inbuf = input.chars.map(&:ord)
     end
     return @inbuf.shift
   end
@@ -125,5 +133,8 @@ class Runtime
 end
 
 file = ARGV.shift
-runtime = Runtime.new(open(file))
+world = YAML.load(open(ARGV.shift))
+moves = world['Moves']
+
+runtime = Runtime.new(open(file), moves)
 runtime.run

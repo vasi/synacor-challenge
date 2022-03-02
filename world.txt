@@ -1,0 +1,65 @@
+Rooms:
+  Foothills:
+    desc: You find yourself standing at the base of an enormous mountain.  At its base to the north, there is a massive doorway.  A sign nearby reads "Keep out!  Definitely no treasure within!"
+    item: tablet
+    south: Foothills_south
+    doorway: Dark cave
+  Foothills_south:
+    desc: As you begin to leave, you feel the urge for adventure pulling you back...
+    north: Foothills
+  Dark_cave:
+    desc: This seems to be the mouth of a deep cave.  As you peer north into the darkness, you think you hear the echoes of bats deeper within.
+    south: Foothills
+    north: Dark_cave_north
+  Dark_cave_north:
+    desc: The cave is somewhat narrow here, and the light from the doorway to the south is quite dim.
+    south: Dark_cave
+    north: Dark_cave_ledge
+  Dark_cave_ledge:
+    desc: The cave acoustics dramatically change as you find yourself at a legde above a large chasm.  There is barely enough light here to notice a rope bridge leading out into the dark emptiness.
+    south: Dark_cave_north
+    bridge: Rope_bridge
+  Rope_bridge:
+    desc: This rope bridge creaks as you walk along it.  You aren't sure how old it is, or whether it can even support your weight.
+    back: Dark_cave_ledge
+    continue: Falling
+  Falling:
+    desc: As you continue along the bridge, it snaps!  You try to grab the bridge, but it evades your grasp in the darkness.  You are plummeting quickly downward into the chasm...
+    down: Moss_cavern
+  Moss_cavern:
+    desc: You are standing in a large cavern full of bioluminescent moss.  It must have broken your fall!  The cavern extends to the east and west; at the west end, you think you see a passage leading out of the cavern.
+    west: Moss_cavern_passage
+    east: Moss_cavern_lantern
+  Moss_cavern_lantern:
+    desc: You are standing in a large cavern full of bioluminescent moss.  The cavern extends to the west.
+    item: empty lantern
+    west: Moss_cavern
+  Moss_cavern_passage:
+    desc: You are standing in a large cavern full of bioluminescent moss.  The cavern extends to the east.  There is a crevise in the rocks which opens into a passage.
+    east: Moss_cavern
+    passage: Passage
+  Passage:
+    desc: You are in a crevise on the west wall of the moss cavern.  A dark passage leads further west.  There is a ladder here which leads down into a smaller, moss-filled cavern below.
+    cavern: ???
+    ladder: ???
+    darkness: ???
+
+Items:
+  - tablet
+  - empty lantern
+
+Moves:
+  - take tablet
+  - doorway
+  - north
+  - north
+  - bridge
+  - continue
+  - down
+  - east
+  - take empty lantern
+  - west
+  - west
+  - passage
+
+
