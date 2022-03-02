@@ -7,6 +7,7 @@ class Runtime
     @reg = [0] * 8
     @stack = []
     @pc = 0
+    @inbuf = []
     @halt = false
   end
 
@@ -36,6 +37,13 @@ class Runtime
     else
       raise "Bad register spec #{loc}"
     end
+  end
+
+  def getc
+    if @inbuf.empty?
+      @inbuf = gets.chars.map(&:ord)
+    end
+    return @inbuf.shift
   end
 
   def do_inst
@@ -100,6 +108,8 @@ class Runtime
       @pc = @stack.pop
     when 19
       $stdout.putc(read)
+    when 20
+      set(shift, getc)
     when 21
       # noop
     else
