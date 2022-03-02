@@ -47,6 +47,7 @@ class Runtime
       input = if @inputs.empty?
         gets
       else
+        puts @inputs.last
         @inputs.shift + "\n"
       end
       @inbuf = input.chars.map(&:ord)

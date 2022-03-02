@@ -2,51 +2,123 @@ Rooms:
   Foothills:
     desc: You find yourself standing at the base of an enormous mountain.  At its base to the north, there is a massive doorway.  A sign nearby reads "Keep out!  Definitely no treasure within!"
     item: tablet
-    south: Foothills_south
+    south: Foothills south
     doorway: Dark cave
-  Foothills_south:
+  Foothills south:
     desc: As you begin to leave, you feel the urge for adventure pulling you back...
     north: Foothills
-  Dark_cave:
+  Dark cave:
     desc: This seems to be the mouth of a deep cave.  As you peer north into the darkness, you think you hear the echoes of bats deeper within.
     south: Foothills
-    north: Dark_cave_north
-  Dark_cave_north:
+    north: Dark cave north
+  Dark cave north:
     desc: The cave is somewhat narrow here, and the light from the doorway to the south is quite dim.
-    south: Dark_cave
-    north: Dark_cave_ledge
-  Dark_cave_ledge:
+    south: Dark cave
+    north: Dark cave ledge
+  Dark cave ledge:
     desc: The cave acoustics dramatically change as you find yourself at a legde above a large chasm.  There is barely enough light here to notice a rope bridge leading out into the dark emptiness.
-    south: Dark_cave_north
-    bridge: Rope_bridge
-  Rope_bridge:
+    south: Dark cave north
+    bridge: Rope bridge
+  Rope bridge:
     desc: This rope bridge creaks as you walk along it.  You aren't sure how old it is, or whether it can even support your weight.
-    back: Dark_cave_ledge
+    back: Dark cave ledge
     continue: Falling
   Falling:
     desc: As you continue along the bridge, it snaps!  You try to grab the bridge, but it evades your grasp in the darkness.  You are plummeting quickly downward into the chasm...
-    down: Moss_cavern
-  Moss_cavern:
+    down: Moss cavern
+  Moss cavern:
     desc: You are standing in a large cavern full of bioluminescent moss.  It must have broken your fall!  The cavern extends to the east and west; at the west end, you think you see a passage leading out of the cavern.
-    west: Moss_cavern_passage
-    east: Moss_cavern_lantern
-  Moss_cavern_lantern:
+    west: Moss cavern passage
+    east: Moss cavern lantern
+  Moss cavern lantern:
     desc: You are standing in a large cavern full of bioluminescent moss.  The cavern extends to the west.
     item: empty lantern
-    west: Moss_cavern
-  Moss_cavern_passage:
+    west: Moss cavern
+  Moss cavern passage:
     desc: You are standing in a large cavern full of bioluminescent moss.  The cavern extends to the east.  There is a crevise in the rocks which opens into a passage.
-    east: Moss_cavern
+    east: Moss cavern
     passage: Passage
   Passage:
     desc: You are in a crevise on the west wall of the moss cavern.  A dark passage leads further west.  There is a ladder here which leads down into a smaller, moss-filled cavern below.
-    cavern: ???
-    ladder: ???
-    darkness: ???
+    cavern: Moss cavern passage
+    ladder: Ladder
+    darkness: Passage dark
+  Ladder:
+    desc: You are in a maze of twisty little passages, all dimly lit by more bioluminescent moss.  There is a ladder here leading up.
+    ladder: Passage
+    north: Twisty maze of little passages
+    south: Maze of little twisty passages
+    east: Maze of alike little passages
+    west: Little maze of twisty passages
+  Twisty maze of little passages:
+    desc: You are in a twisty maze of little passages, all alike.
+    north: Maze of little twisty passages
+    south: Ladder
+    west: Twisty maze of little passages
+  Maze of little twisty passages:
+    desc: You are in a maze of little twisty passages, all alike.
+    north: Ladder
+    south: Twisty maze of little passages
+    east: Maze of little twisty passages
+  Little maze of twisty passages:
+    desc: You are in a little maze of twisty passages, all alike.
+    north: Little maze of twisty passages
+    south: Twisty alike of little passages
+    east: Ladder
+  Twisty alike of little passages:
+    desc: You are in a twisty alike of little passages, all maze. The east passage appears very dark; you feel likely to be eaten by a Grue.
+    north: Can
+    south: Twisty maze of little passages
+    west: Maze of twisty little passages
+    east: Twisty maze of little passages 2
+  Maze of alike little passages:
+    desc: You are in a maze of alike little passages, all twisty. The passage to the east looks very dark; you think you hear a Grue.
+    north: Maze of alike twisty passages
+    south: Maze of alike little passages
+    west: Ladder
+    east: Twisty maze of little passages 2
+  Maze of alike twisty passages:
+    desc: You are in a maze of alike twisty passages, all little.
+    north: Maze of little twisty passages
+    east: Twisty maze of little passages
+    south: Maze of alike twisty passages
+  Can:
+    desc: You are in a maze of twisty little passages, all alike.
+    item: can
+    west: Ladder
+  Twisty maze of little passages 2:
+    desc: You are in a twisty maze of little passages, all alike.
+    north: Maze of little twisty passages
+    south: Twisty maze of little passages
+  Passage dark:
+    desc: You feel that your light source is more than sufficient to keep grues away.
+    continue: Passage narrow
+    back: Passage
+  Passage narrow:
+    desc: You are in a narrow passage.  There is darkness to the west, but you can barely see a glowing opening to the east.
+    west: Passage dark narrow
+    east: Passage dark
+  Passage dark narrow:
+    desc: You are in a dark, narrow passage.
+    west: Passage dark narrow 2
+    east: Passage narrow
+  Passage dark narrow 2:
+    desc: You are in a dark, narrow passage.
+    west: Passage vegetation
+    east: Passage narrow 2
+  Passage vegatation:
+    desc: You are in a dark, narrow passage.  To the west, you spot some vegetation where the passage expands.
+    east: Passage dark narrow 2
+    west: Ruins
+  Ruins:
+    desc: You stand in a large cavern with a huge ruin to the north, overgrown by plant life.  There is a large stone archway to the north acting as the doorway to the ruined complex.  A crevice in the rock to the east leads to an alarmingly dark passageway.
+    east: ???
+    north: ???
 
 Items:
   - tablet
   - empty lantern
+  - can
 
 Moves:
   - take tablet
@@ -61,5 +133,19 @@ Moves:
   - west
   - west
   - passage
-
+  - ladder
+  - west
+  - south
+  - north
+  - take can
+  - use can
+  - use lantern
+  - west
+  - ladder
+  - darkness
+  - continue
+  - west
+  - west
+  - west
+  - west
 
