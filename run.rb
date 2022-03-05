@@ -78,7 +78,7 @@ class Runtime
       @outputs << @curline
       @curline = ""
 
-      @debug = true if /billion/.match(@outputs[-2])
+      # @debug = true if /billion/.match(@outputs[-2])
     else
       @curline += c.chr
     end
@@ -109,21 +109,36 @@ class Runtime
     ["noop", 0],
   ]
 
-  def disasm(loc)
+  def disasm_helper(loc)
     opcode = @memory[loc]
     inst, argc = *OPCODES[opcode]
     args = (0...argc).map do |i|
       a = @memory[loc + i + 1]
       a >= REGBASE ? "r#{a-REGBASE}" : a.to_s
     end
-    "#{inst.ljust(4)} #{args.join(' ')}"
+    [inst, args, "#{loc.to_s.ljust(5)}  #{inst.ljust(4)} #{args.join(' ')}"]
+  end
+  
+  def disasm(range)
+    loc = range.first
+    out = []
+    while range.include?(loc)
+      inst, args, dis = disasm_helper(loc)
+      out << dis
+      loc += args.size + 1
+    end
+    out
+  end
+
+  def disasm1(loc)
+    disasm_helper(loc).last
   end
 
   def inspect
-    dis = disasm(@pc).ljust(20)
+    dis = disasm1(@pc).ljust(20)
     regs = @reg.map {|r| r.to_s.ljust(5) }.join(' ')
     depth = @stack.size
-    "pc=#@pc  #{dis}  r=[#{regs}]  #st=#{depth}"
+    "#{dis}  r=[#{regs}]  #st=#{depth}"
   end
 
   def do_inst
@@ -209,4 +224,5 @@ world = YAML.load(open(ARGV.shift))
 moves = world['Moves']
 
 runtime = Runtime.new(open(file), moves)
+#puts runtime.disasm(6027..6067).join("\n")
 runtime.run
