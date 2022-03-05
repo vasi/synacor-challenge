@@ -80,10 +80,45 @@ class Runtime
     end
   end
 
+  OPCODES = [
+    ["halt", 0],
+    ["set", 2],
+    ["push", 1],
+    ["pop", 1],
+    ["eq", 3],
+    ["gt", 3],
+    ["jmp", 1],
+    ["jt", 2],
+    ["jf", 2],
+    ["add", 3],
+    ["mult", 3],
+    ["mod", 3],
+    ["and", 3],
+    ["or", 3],
+    ["not", 2],
+    ["rmem", 2],
+    ["wmem", 2],
+    ["call", 1],
+    ["ret", 0],
+    ["out", 1],
+    ["in", 1],
+    ["noop", 0],
+  ]
+
+  def disasm(loc)
+    opcode = @memory[loc]
+    inst, argc = *OPCODES[opcode]
+    args = 0.upto(argc).map do |i|
+      a = @memory[loc + i + 1]
+      a >= REGBASE ? "r#{a-REGBASE}" : a.to_s
+    end
+    "#{inst} #{args.join(' ')}"
+  end
+
   def do_inst
+    puts disasm(@pc) if @debug
     pc = @pc
     opcode = shift
-    puts "opcode #{opcode} at #{pc}" if @debug
     case opcode
     when 0
       @halt = true
