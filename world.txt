@@ -212,5 +212,5 @@ Moves:
   - use teleporter
   - take business card
   - take strange book
-  - set 7 35
+  - set 7 1
   - use teleporter

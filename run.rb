@@ -116,7 +116,7 @@ class Runtime
       a = @memory[loc + i + 1]
       a >= REGBASE ? "r#{a-REGBASE}" : a.to_s
     end
-    [inst, args, "#{loc.to_s.ljust(5)}  #{inst.ljust(4)} #{args.join(' ')}"]
+    [inst, args, "#{loc.to_s.ljust(5)}  #{inst.ljust(4)} #{args.join(' ').ljust(15)}"]
   end
   
   def disasm(range)
