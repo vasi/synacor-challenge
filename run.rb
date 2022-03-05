@@ -2,6 +2,49 @@
 require 'yaml'
 
 class Runtime
+  MOD = 1 << 15
+end
+
+class F6027
+  MOD = Runtime::MOD
+
+  def initialize()
+    @memo = {}
+  end
+
+  def f(r0, r1, r7)
+    if r0 == 0
+      (r1 + 1) % MOD
+    elsif r1 == 0
+      get!(r0 - 1, r7, r7)
+    else
+      t = get!(r0, (r1 - 1) % MOD, r7)
+      get!(r0 - 1, t, r7)
+    end
+  end
+
+  def get!(r0, r1, r7)
+    r = @memo[[r0, r1, r7]]
+    raise "Missing value for #{r0} #{r1} #{r7}" if r.nil?
+    r
+  end
+
+  def fill(r0, r7)
+    0.upto(r0) do |a|
+      next if @memo.include?([a, 0, r7])
+      (0...MOD).each do |b|
+        @memo[[a, b, r7]] = f(a, b, r7)
+      end
+    end
+  end
+
+  def get(r0, r1, r7)
+    fill(r0, r7) unless @memo.include?([r0, r1, r7])
+    get!(r0, r1, r7)
+  end
+end
+
+class Runtime
   def initialize(io, inputs)
     membase = io.read.unpack('S<*')
     @memory = membase + [0] * (1<<15 - membase.size)
@@ -15,6 +58,8 @@ class Runtime
     @inputs = inputs
     @curline = ""
     @outputs = []
+
+    @f6027 = F6027.new
   end
 
   def shift
@@ -24,7 +69,6 @@ class Runtime
   end
 
   REGBASE = 1 << 15
-  MOD = 1 << 15
 
   def read
     v = shift
@@ -141,8 +185,24 @@ class Runtime
     "#{dis}  r=[#{regs}]  #st=#{depth}"
   end
 
+  SPECIALS = {
+    6027 => :do_6027,
+  }
+
+  def do_6027
+    r = @f6027.get(@reg[0], @reg[1], @reg[7])
+    puts "f6027(%d, %d, %d) = %d" % [@reg[0], @reg[1], @reg[7], r]
+    @reg[0], @reg1 = r, (r-1) % MOD
+    @pc = @stack.pop
+  end
+
   def do_inst
     puts inspect if @debug
+
+    if (special = SPECIALS[@pc])
+      return send(special)
+    end
+
     pc = @pc
     opcode = shift
     case opcode
