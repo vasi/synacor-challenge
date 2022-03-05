@@ -13,6 +13,7 @@ class Runtime
 
     @inbuf = []
     @inputs = inputs
+    @curline = ""
   end
 
   def shift
@@ -29,6 +30,9 @@ class Runtime
     if v < REGBASE
       return v
     elsif v - REGBASE < @reg.size
+      if v - REGBASE == 7
+        # puts "WHOA MAGIC EIGHTH REGISTER"
+      end
       return @reg[v - REGBASE]
     else
       raise "Bad immediate #{v}"
@@ -56,6 +60,8 @@ class Runtime
 
         if input == 'debug'
           @debug = !@debug
+        elsif md = /^set (\d+) (\d+)$/.match(input)
+          @reg[md[1].to_i] = md[2].to_i
         else
           break
         end
@@ -63,6 +69,15 @@ class Runtime
       @inbuf = (input + "\n").chars.map(&:ord)
     end
     return @inbuf.shift
+  end
+
+  def putc(c)
+    $stdout.putc(c)
+    if c.chr == "\n"
+      @curline = ""
+    else
+      @curline += c.chr
+    end
   end
 
   def do_inst
@@ -126,7 +141,7 @@ class Runtime
       raise "Empty stack" if @stack.empty?
       @pc = @stack.pop
     when 19
-      $stdout.putc(read)
+      putc(read)
     when 20
       set(shift, getc)
     when 21
