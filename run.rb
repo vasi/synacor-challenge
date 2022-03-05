@@ -190,8 +190,9 @@ class Runtime
   }
 
   def do_6027
+    # @debug = true
     r = @f6027.get(@reg[0], @reg[1], @reg[7])
-    puts "f6027(%d, %d, %d) = %d" % [@reg[0], @reg[1], @reg[7], r]
+    # puts "f6027(%d, %d, %d) = %d" % [@reg[0], @reg[1], @reg[7], r]
     @reg[0], @reg1 = r, (r-1) % MOD
     @pc = @stack.pop
   end
