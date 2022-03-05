@@ -14,6 +14,7 @@ class Runtime
     @inbuf = []
     @inputs = inputs
     @curline = ""
+    @outputs = []
   end
 
   def shift
@@ -74,7 +75,10 @@ class Runtime
   def putc(c)
     $stdout.putc(c)
     if c.chr == "\n"
+      @outputs << @curline
       @curline = ""
+
+      @debug = true if /billion/.match(@outputs[-2])
     else
       @curline += c.chr
     end
@@ -108,15 +112,22 @@ class Runtime
   def disasm(loc)
     opcode = @memory[loc]
     inst, argc = *OPCODES[opcode]
-    args = 0.upto(argc).map do |i|
+    args = (0...argc).map do |i|
       a = @memory[loc + i + 1]
       a >= REGBASE ? "r#{a-REGBASE}" : a.to_s
     end
-    "#{inst} #{args.join(' ')}"
+    "#{inst.ljust(4)} #{args.join(' ')}"
+  end
+
+  def inspect
+    dis = disasm(@pc).ljust(20)
+    regs = @reg.map {|r| r.to_s.ljust(5) }.join(' ')
+    depth = @stack.size
+    "pc=#@pc  #{dis}  r=[#{regs}]  #st=#{depth}"
   end
 
   def do_inst
-    puts disasm(@pc) if @debug
+    puts inspect if @debug
     pc = @pc
     opcode = shift
     case opcode
