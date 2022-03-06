@@ -2,6 +2,7 @@
 2: Initial printing
 3: Self-test completion
 4: Use tablet
-5: Use teleporter
-6: Magic eighth register teleporter
-7: Mirror
+5: Wall of twisty passages
+6: Use teleporter
+7: Magic eighth register teleporter
+8: Mirror
