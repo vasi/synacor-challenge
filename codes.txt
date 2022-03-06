@@ -5,4 +5,5 @@
 5: Wall of twisty passages
 6: Use teleporter
 7: Magic eighth register teleporter
-8: Mirror
+8: Mirror, reversed visually!
+
