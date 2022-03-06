@@ -225,6 +225,7 @@ Items:
   - strange book
   - journal
   - orb
+  - mirror
 
 Moves:
   - take tablet
@@ -294,5 +295,21 @@ Moves:
   - north
   - north
   - take orb
+  - north
+  - east
+  - east
+  - north
+  - west
+  - south
+  - east
+  - east
+  - west
+  - north
+  - north
+  - east
+  - vault
+  - take mirror
+  - use mirror
+
 
 

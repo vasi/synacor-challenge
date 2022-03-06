@@ -4,3 +4,4 @@
 4: Use tablet
 5: Use teleporter
 6: Magic eighth register teleporter
+7: Mirror
